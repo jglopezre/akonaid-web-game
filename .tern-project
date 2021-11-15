@@ -1,0 +1,8 @@
+{
+  "libs": [
+    "phaser"
+  ],
+  "loadEagerly": [
+    "./src/*.js"
+  ]
+}
