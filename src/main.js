@@ -1,7 +1,7 @@
 import { Game } from './game.js';
 
 const config = {
-    type: Phaser.CANVAS,
+    type: Phaser.AUTO,
     width: 350,
     height:600,
     scene: [Game],
@@ -9,7 +9,6 @@ const config = {
     physics: {
 	default: 'arcade',
 	arcade: {
-	    gravity: { y: 400 },
 	    debug: false
 	}
     }

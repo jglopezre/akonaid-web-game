@@ -1,6 +1,7 @@
 {
   "libs": [
-    "phaser"
+    "phaser",
+    "browser"
   ],
   "loadEagerly": [
     "./src/*.js"
