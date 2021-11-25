@@ -8,7 +8,21 @@ export class Game extends Phaser.Scene {
 	this.scoreText;
     }
 
-    
+    makeBricks() {
+	this.bricks = this.physics.add.staticGroup({
+	    key: ['whiteBrick', 'orangeBrick', 'cyanBrick', 'greenBrick'],
+	    frameQuantity: 7,
+	    gridAlign: {
+		width: 7,
+		height: 4,
+		cellWidth: 46,
+		cellHeight: 24,
+		x: 37,
+		y: 150
+	    }
+	})
+	
+    }
     
     //Platform creating function
     makeRectangle(description) {
@@ -73,9 +87,14 @@ export class Game extends Phaser.Scene {
 	
     }
 
+    brickImpact(ball, bricks) {
+	bricks.disableBody(true, true);
+    }
+
     colliders() {
 	this.physics.world.setBoundsCollision(true, true, true, false);
 	this.physics.add.collider(this.balls[0], this.platform[0], this.platformImpact, null, this);
+	this.physics.add.collider(this.balls[0], this.bricks, this.brickImpact, null, this);
 	
     }
 
@@ -87,6 +106,11 @@ export class Game extends Phaser.Scene {
     
     preload(){
 	this.load.image('background', 'assets/background01.png');
+	this.load.image('greenBrick', 'assets/green.png');
+	this.load.image('orangeBrick', 'assets/orange.png');
+	this.load.image('whiteBrick', 'assets/white.png');
+	this.load.image('cyanBrick', 'assets/cyan.png')
+	
     }
     
     create(){
@@ -109,10 +133,9 @@ export class Game extends Phaser.Scene {
 	
 	this.cursors = this.input.keyboard.createCursorKeys();
 
+	this.makeBricks();
+	
 	this.colliders();
-
-
-
 	
     }
 
