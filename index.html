@@ -1,36 +1,40 @@
 <!DOCTYPE html>
 <html lang="es_AR">
-  <head>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARkONAID</title>
-    <style>
-      * {
-	  margin: 0;
-	  padding: 0;
-      }
-      body {
-	  background-color: white;
-	  display: flex;
-	  align-items: center;
-	  justify-content: space-around;
-	  flex-direction: column;
-	  font-size: 16px;
-	  font-family: arial;
-	  color: slategrey;
-	  width: 100%;
-	  height: 100vh;
-      }
-      #game {
-	  border: solid 4px slategray;
-	  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
-      }
-    </style>
-  </head>
-  <body>
-    <h1>ARkONAID</h1>
-    <div id="game"></div>
-    <script src="src/phaser.js"></script>
-    <script src="src/main.js" type="module"></script>
-  </body>
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ARkONAID</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      flex-direction: column;
+      font-size: 16px;
+      font-family: arial;
+      color: slategrey;
+      width: 100%;
+      height: 100vh;
+    }
+
+    #game {
+      border: solid 4px slategray;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+    }
+  </style>
+</head>
+
+<body>
+  <div id="game"></div>
+  <script src="src/phaser.js"></script>
+  <script src="src/main.js" type="module"></script>
+</body>
+
 </html>
