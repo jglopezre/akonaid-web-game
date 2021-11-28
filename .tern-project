@@ -1,9 +1,6 @@
 {
-  "libs": [
-    "phaser",
-    "browser"
-  ],
-  "loadEagerly": [
-    "./src/*.js"
-  ]
+  "plugins": {
+    "node": {
+    }
+  }
 }
