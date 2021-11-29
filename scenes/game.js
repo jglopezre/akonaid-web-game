@@ -82,11 +82,19 @@ export class Game extends Phaser.Scene {
         this.scoreText.setText('SCORE: ' + this.score);
     }
 
+    endGame(completed = false) {
+	if(! completed) {
+	    this.scene.start('gameover');
+	} else {
+	    this.scene.start('congratulations');
+	}
+    }
+    
     brickImpact(ball, bricks) {
         bricks.disableBody(true, true);
         this.increasePoints(10);
         if (this.bricks.countActive() === 0) {
-            this.congratsTetx.visible = true;
+	    this.endGame(true);
         }
     }
 
@@ -94,23 +102,9 @@ export class Game extends Phaser.Scene {
         this.physics.world.setBoundsCollision(true, true, true, false);
         this.physics.add.collider(this.balls[0], this.platform[0], this.platformImpact, null, this);
         this.physics.add.collider(this.balls[0], this.bricks, this.brickImpact, null, this);
-
     }
 
-    createTexts() {
-        this.congratsTetx = this.add.text(20, 300, 'ACOMPLISHED!!', {
-            fontSize: '40px',
-            fill: '#fff',
-        })
-        this.congratsTetx.visible = false;
-
-        this.gameOverText = this.add.text(20, 300, 'GAME OVER', {
-            fontSize: '40px',
-            fill: '#fff',
-        })
-        this.gameOverText.visible = false;
-    }
-
+  
     /*********SCENE DEFAULT METHODS*************************************************/
 
     init() {
@@ -118,13 +112,13 @@ export class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.image('background', 'assets/background02.png');
-        this.load.image('ball', 'assets/white-ball.png');
-        this.load.image('greenBrick', 'assets/green.png');
-        this.load.image('orangeBrick', 'assets/orange.png');
-        this.load.image('whiteBrick', 'assets/white.png');
-        this.load.image('cyanBrick', 'assets/cyan.png');
-        this.load.spritesheet('playerPlatform', 'assets/platform-blue-1.png', {
+        this.load.image('background', 'assets/images/background02.png');
+        this.load.image('ball', 'assets/images/white-ball.png');
+        this.load.image('greenBrick', 'assets/images/green.png');
+        this.load.image('orangeBrick', 'assets/images/orange.png');
+        this.load.image('whiteBrick', 'assets/images/white.png');
+        this.load.image('cyanBrick', 'assets/images/cyan.png');
+        this.load.spritesheet('playerPlatform', 'assets/images/platform-blue-1.png', {
             frameWidth: 88,
             frameHeight: 22
         });
@@ -139,8 +133,6 @@ export class Game extends Phaser.Scene {
             fill: '#fff',
             fontFamily: 'verdana, arial, sans-serif'
         });
-
-        this.createTexts();
 
         this.platform[0] = this.makePlatform({
             x: 175,
@@ -157,7 +149,6 @@ export class Game extends Phaser.Scene {
         this.bricks = this.makeBricks();
 
         this.colliders();
-
     }
 
     update() {
@@ -165,9 +156,8 @@ export class Game extends Phaser.Scene {
         this.moving(this.cursors, 0);
 
         if (this.balls[0].y > 755) {
-            this.gameOverText.visible = true;
-            this.scene.pause();
-            this.bricks.setVisible(false);
+	    console.log('GAME OVER');
+	    this.endGame();
         }
 
         if (this.balls[0].getData('glue')) {
