@@ -1,6 +1,5 @@
 {
-  "plugins": {
-    "node": {
-    }
-  }
+  "loadEagerly": [
+    "src/phaser.d.ts"
+  ]
 }
