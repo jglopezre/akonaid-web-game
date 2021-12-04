@@ -52,6 +52,21 @@ export class Game extends Phaser.Scene {
         }
     }
 
+    brickImpact(ball, bricks) {
+        this.brickHit.play();
+        bricks.disableBody(true, true);
+        this.increasePoints(10);
+        if(this.phaseManager.bricks.countActive() === 0) {
+            this.phaseManager.nextLevel();
+            this.setInitialPlatformState();
+        }
+    }
+
+    hardBrickImpact(ball, bricks) {
+        this.hardBrickHit.play();
+    }
+
+
     platformImpact(ball, platform) {
         this.ballHit.play();
         let relativeImpact = ball.x - platform.x;
@@ -78,15 +93,7 @@ export class Game extends Phaser.Scene {
 	    }
     }
 
-    brickImpact(ball, bricks) {
-        this.brickHit.play();
-        bricks.disableBody(true, true);
-        this.increasePoints(10);
-        if(this.phaseManager.isPhaseFinished()) {
-            this.phaseManager.nextLevel();
-            this.setInitialPlatformState();
-        }
-    }
+    
 
     colliders() {
         this.physics.world.setBoundsCollision(true, true, true, false);
@@ -94,10 +101,10 @@ export class Game extends Phaser.Scene {
     }
 
     setInitialPlatformState() {
-        //this.platform.x = this.PLATFORM_INNITIAL_POS_X
+        this.platform.x = this.PLATFORM_INNITIAL_POS_X
         this.platform.y = this.PLATFORM_INNITIAL_POS_Y
         this.ball.body.setVelocity(0, 0);
-        //this.ball.x = this.BALL_INNITIAL_POS_X;
+        this.ball.x = this.BALL_INNITIAL_POS_X;
         this.ball.y = this.BALL_INNITIAL_POS_Y;
         this.ball.setData('glue', true);
     }
@@ -111,10 +118,8 @@ export class Game extends Phaser.Scene {
     }
 
     preload() {
-        this.load.audio('bgm-level1', 'assets/bgm/bgm1.wav');
-        this.load.audio('ball-hit', 'assets/sfx/ball-hit.wav');
+        this.load.audio('ball-hit', 'assets/sfx/ball-hit.ogg');
         
-        this.load.image('background', 'assets/images/background02.png');
         this.load.image('ball', 'assets/images/white-ball.png');
         this.load.spritesheet('playerPlatform', 'assets/images/platform-blue-1.png', {
             frameWidth: 88,
@@ -126,11 +131,11 @@ export class Game extends Phaser.Scene {
    }
 
     create() {
-        this.add.image(0, 0, 'background').setOrigin(0, 0);
+        
         this.bgm = this.sound.add('bgm-level1').setVolume(0.2);
         this.ballHit = this.sound.add('ball-hit');
+        this.hardBrickHit = this.sound.add('hard-block-hit');
         this.brickHit = this.sound.add('block-hit');
-        
         this.scoreText = this.add.text(16, 16, 'SCORE: 0', {
             fontSize: '20px',
             fill: '#fff',
@@ -147,16 +152,21 @@ export class Game extends Phaser.Scene {
             y: this.BALL_INNITIAL_POS_Y
         });
 
-        this.liveCounter.create();
         this.phaseManager.create();
+
+        this.liveCounter.create();
 
         this.cursors = this.input.keyboard.createCursorKeys();
 
         this.colliders();
+
+        this.platform.anims.play('alive', true);
+        //console.log(this.phaseManager.hardBricks)
+        console.log(PhaseManager.miPrueba());
     }
 
     update() {
-        this.platform.anims.play('alive', true);
+        
         this.moving(this.cursors, 0);
 
         if (this.ball.y > 755) {

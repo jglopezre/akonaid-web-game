@@ -8,7 +8,7 @@ export class LiveCounter {
 
   preload() {
     this.relatedScene.load.image('lives', 'assets/images/lives.png');
-    this.relatedScene.load.audio('death', 'assets/sfx/death.wav');
+    this.relatedScene.load.audio('death', 'assets/sfx/death.ogg');
   }
 
   create() {
