@@ -162,7 +162,6 @@ export class Game extends Phaser.Scene {
 
         this.platform.anims.play('alive', true);
         //console.log(this.phaseManager.hardBricks)
-        console.log(PhaseManager.miPrueba());
     }
 
     update() {

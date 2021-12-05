@@ -4,6 +4,7 @@ let brickHit = null;
 export class PhaseBase {
     constructor(scene) {
         this.relatedScene = scene;
+        this.hardBricks = [];
     }
  
 
@@ -39,7 +40,7 @@ export class PhaseBase {
             repeatDelay: (2000)
         });
 
-        this.hardBricks.anims.play('goldShine', true);
+        this.hardBricks.forEach(item => item.anims.play('goldShine', true));
     }
     
     deleteHardBricks() {
