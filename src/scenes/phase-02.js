@@ -37,24 +37,8 @@ export class Phase02 extends PhaseBase {
                 );
             }
         }
-        //this.hardBricks = hardBricks;
-        /* this.hardBricks = this.relatedScene.physics.add.sprite(35, 344, 'goldBrick');
-        this.hardBricks.body.setImmovable(); */
-     
+        
         this.createHardBrickAnimation();
-
-        /* this.hardBricks = this.relatedScene.physics.add.staticGroup({
-            key: ['goldBrick'],
-            frameQuantity: 5,
-            gridAlign: {
-                width: 5,
-                height: 1,
-                cellWidth: 46,
-                cellHeight: 24,
-                x: 37,
-                y: 346,
-            }
-        });       */  
 
         this.configureCollision();
         this.configureHardCollision();

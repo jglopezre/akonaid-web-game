@@ -1,5 +1,6 @@
 import { LiveCounter } from "../components/livecounter.js";
 import { PhaseManager } from "./phase-manager.js";
+import { PowerUps } from "../components/powerups.js";
 
 export class Game extends Phaser.Scene {
     constructor() {
@@ -115,6 +116,7 @@ export class Game extends Phaser.Scene {
         this.score = 0;
         this.phaseManager = new PhaseManager(this);
         this.liveCounter = new LiveCounter(this, 3);
+        this.powerUps = new PowerUps(this);
     }
 
     preload() {
@@ -127,7 +129,9 @@ export class Game extends Phaser.Scene {
         });
 
         this.phaseManager.preload();
+        this.powerUps.preload();
         this.liveCounter.preload();
+        
    }
 
     create() {
@@ -160,8 +164,8 @@ export class Game extends Phaser.Scene {
 
         this.colliders();
 
+        this.powerUps.create();
         this.platform.anims.play('alive', true);
-        //console.log(this.phaseManager.hardBricks)
     }
 
     update() {
