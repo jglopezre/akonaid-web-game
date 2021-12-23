@@ -164,7 +164,6 @@ export class Game extends Phaser.Scene {
 
         this.colliders();
 
-        this.powerUps.create();
         this.platform.anims.play('alive', true);
     }
 

@@ -7,7 +7,6 @@ export class PowerUps {
     }
 
     preload() {
-        console.log('preload')
         this.relatedScene.load.spritesheet('powerup-capsules', 'assets/images/power-ups.png', {
             frameWidth: 44,
             frameHeight: 22

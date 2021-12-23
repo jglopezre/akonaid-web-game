@@ -33,12 +33,17 @@ export class PhaseManager {
         this.currentPhase.create();
         this.bricks = this.currentPhase.bricks;
         this.hardBricks = this.currentPhase.hardBricks;
+        console.log(this.hardBricks)
         this.hardBrickShine = this.currentPhase.hardBrickShine;
         return this.currentPhase
     }
 
     nextLevel() {
-        this.currentPhase.deleteHardBricks();
+
+        if (this.hardBricks.length > 0) {
+            this.currentPhase.deleteHardBricks();
+        }
+        
         if(this.phases.length === 0) {
             this.relatedScene.endGame(true);
         } else {
