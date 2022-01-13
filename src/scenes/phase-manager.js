@@ -5,7 +5,8 @@ export class PhaseManager {
     constructor(scene) {
         this.relatedScene = scene;
         this.phases = [
-            Phase02
+            Phase02,
+            Phase01
         ];
     }
 
@@ -31,7 +32,7 @@ export class PhaseManager {
         let CurrentPhaseClass = this.phases.pop();
         this.currentPhase = new CurrentPhaseClass(this.relatedScene);
         this.currentPhase.create();
-        this.bricks = this.currentPhase.bricks;
+        this.bricksGroup = this.currentPhase.bricksGroup;
         this.hardBricks = this.currentPhase.hardBricks;
         console.log(this.hardBricks)
         this.hardBrickShine = this.currentPhase.hardBrickShine;

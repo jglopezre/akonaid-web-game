@@ -12,37 +12,101 @@ export class Phase02 extends PhaseBase {
         this.background = this.relatedScene.add.image(0, 0, 'background02').setOrigin(0, 0);
         this.background.setDepth(-1);
         
-        this.bricks = this.relatedScene.physics.add.staticGroup({
-            key: [ 'orangeBrick', 'greenBrick', 'whiteBrick', 'cyanBrick' ],
-            frameQuantity: 4,
-            gridAlign: {
-                width: 4,
-                height: 4,
-                cellWidth: 46,
-                cellHeight: 24,
-                x: 37,
-                y: 250
-            }
-        });
-
+        this.bricksGroup = this.relatedScene.physics.add.staticGroup();
         this.hardBricksGroup = this.relatedScene.physics.add.staticGroup();
-        
-        //let hardBricks = []
-        for(let i = 0; i < HHEIGHT; i++){
-            for(let j = 0; j < WWIDTH; j++){
-                this.hardBricks.push(this.hardBricksGroup.create(
-                    (XX + (CELLWWIDTH * j)),
-                    (YY + (CELLHHEIGHT * i)),
-                    'goldBrick')
-                );
+
+        //first soft-bricks group
+       
+        for(let i = 0; i < 3; i++) {
+            for(let j = 0; j < 7; j++) {
+                this.bricks.push(this.bricksGroup.create(
+                    (37 + (CELLWWIDTH * j)),
+                    (199 + (CELLHHEIGHT * i)),
+                    'orangeBrick')
+                    ); 
             }
+        }
+
+        // Second bricks group
+        for(let j = 0; j < WWIDTH; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (37 + (CELLWWIDTH * j)),
+                (287 + CELLHHEIGHT),
+                'whiteBrick')
+            );
+        }
+
+        for(let j = 0; j < 3; j++){
+            this.hardBricks.push(this.hardBricksGroup.create(
+                (129 + (CELLWWIDTH * j)),
+                (287 + CELLHHEIGHT),
+                'goldBrick')
+            );
+        }
+
+        for(let j = 0; j < 2; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (267 + (CELLWWIDTH * j)),
+                (287 + CELLHHEIGHT),
+                'whiteBrick')
+            );
+        }
+        
+        //Third bricks group
+
+        for(let j = 0; j < 7; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (37 + (CELLWWIDTH * j)),
+                (335 + CELLHHEIGHT),
+                'cyanBrick')
+            );
+        }
+
+        //Four brick group
+        
+        for(let j = 0; j < 2; j++){
+            this.hardBricks.push(this.hardBricksGroup.create(
+                (37 + (CELLWWIDTH * j)),
+                (359 + CELLHHEIGHT),
+                'goldBrick')
+            );
+        }
+
+        for(let j = 0; j < 3; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (129 + (CELLWWIDTH * j)),
+                (359 + CELLHHEIGHT),
+                'greenBrick')
+            );
+        }
+
+        for(let j = 0; j < 2; j++){
+            this.hardBricks.push(this.hardBricksGroup.create(
+                (267 + (CELLWWIDTH * j)),
+                (359 + CELLHHEIGHT),
+                'goldBrick')
+            );
+        }
+
+        for(let j = 0; j < 7; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (37 + (CELLWWIDTH * j)),
+                (383 + CELLHHEIGHT),
+                'cyanBrick')
+            );
+        }
+
+        for(let j = 0; j < 7; j++){
+            this.bricks.push(this.bricksGroup.create(
+                (37 + (CELLWWIDTH * j)),
+                (407 + CELLHHEIGHT),
+                'whiteBrick')
+            );
         }
         
         this.createHardBrickAnimation();
-
         this.configureCollision();
         this.configureHardCollision();
-
     }
 
 }

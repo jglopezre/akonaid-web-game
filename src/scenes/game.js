@@ -57,7 +57,7 @@ export class Game extends Phaser.Scene {
         this.brickHit.play();
         bricks.disableBody(true, true);
         this.increasePoints(10);
-        if(this.phaseManager.bricks.countActive() === 0) {
+        if(this.phaseManager.bricksGroup.countActive() === 0) {
             this.phaseManager.nextLevel();
             this.setInitialPlatformState();
         }
@@ -66,7 +66,6 @@ export class Game extends Phaser.Scene {
     hardBrickImpact(ball, bricks) {
         this.hardBrickHit.play();
     }
-
 
     platformImpact(ball, platform) {
         this.ballHit.play();

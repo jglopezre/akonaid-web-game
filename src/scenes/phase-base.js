@@ -5,13 +5,14 @@ export class PhaseBase {
     constructor(scene) {
         this.relatedScene = scene;
         this.hardBricks = [];
+        this.bricks = [];
     }
  
 
     configureCollision() {
         this.relatedScene.physics.add.collider(
             this.relatedScene.ball,
-            this.bricks,
+            this.bricksGroup,
             this.relatedScene.brickImpact,
             null,
             this.relatedScene
@@ -45,7 +46,7 @@ export class PhaseBase {
     
     deleteHardBricks() {
         if(this.hardBricks) {
-            this.hardBricks.getChildren().forEach( item => {
+            this.hardBricks.forEach( item => {
                 item.disableBody(true, true);
             })
         }

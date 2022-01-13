@@ -6,7 +6,7 @@ export class Phase01 extends PhaseBase {
         this.background = this.relatedScene.add.image(0, 0, 'background01').setOrigin(0, 0);
         this.background.setDepth(-1);
 
-        this.bricks = this.relatedScene.physics.add.staticGroup({
+        this.bricksGroup = this.relatedScene.physics.add.staticGroup({
             key: ['whiteBrick', 'orangeBrick', 'cyanBrick', 'greenBrick'],
             frameQuantity: 7,
             gridAlign: {
