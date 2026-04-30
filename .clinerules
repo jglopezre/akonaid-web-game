@@ -1,0 +1,161 @@
+# .clinerules — Reglas de Comportamiento del Modelo
+
+## Reglas Fundamentales
+
+### 1. Consultar PROJECT_CONTEXT.md antes de proponer cambios
+
+**REGLA**: Antes de proponer cualquier cambio estructural, arquitectónico o de configuración, leer `.opencode/PROJECT_CONTEXT.md`.
+
+**Por qué**: PROJECT_CONTEXT.md es la "fuente de verdad". Cambios sin consultar pueden contradecir decisiones ya tomadas (stack, arquitectura, reglas de oro).
+
+**Aplicación**:
+- ¿Vas a proponer una nueva carpeta o archivo? → Consultar PROJECT_CONTEXT.md
+- ¿Vas a cambiar la estructura de servicios? → Consultar PROJECT_CONTEXT.md
+- ¿Vas a modificar la configuración de Phaser? → Consultar PROJECT_CONTEXT.md
+
+---
+
+### 2. Verificar SKILLS.md antes de generar código
+
+**REGLA**: Antes de escribir código, verificar en `.opencode/SKILLS.md` que el código generado cumpla con:
+
+- ❌ **NUNCA** usar `any`
+- ✅ Usar `interface` para objetos, `type` para uniones
+- ✅ Arrow functions en callbacks de Phaser
+- ✅ Clases para toda lógica (sin funciones sueltas)
+- ✅ Factory Pattern para Game Objects
+- ✅ Servicios inyectados via constructor
+- ✅ IDs generados con ULID
+
+**Por qué**: SKILLS.md codifica los estándares de estilo. Code review manual es lento; cumplir las reglas desde el origen es más eficiente.
+
+---
+
+### 3. Adoptar rol según tipo de archivo
+
+**REGLA**: Según el archivo que se esté editando, adoptar el perfil correspondiente de `.opencode/AGENTS.md`:
+
+| Extensión/Archivo | Rol a Adoptar |
+|-------------------|---------------|
+| `.ts` (lógica) | `game-engine` |
+| `.ts` (servicios, datos) | `data-security` |
+| `.ts` (testing) | `qa` |
+| `.css`, `.html`, DOM | `web-systems` |
+| `.js` → migración | Depende del contenido |
+
+**Aplicación**:
+- Editando `scenes/Game.ts` → Consultar `game-engine` responsibilities
+- Editando `services/AudioService.ts` → Consultar `data-security` responsibilities
+- Editando `*.test.ts` → Consultar `qa` responsibilities
+- Editando `ui.css` → Consultar `web-systems` responsibilities
+
+---
+
+## Reglas de Sintaxis
+
+### Prohibido: `any`
+
+```typescript
+// ❌ PROHIBIDO
+function processData(data: any): any {
+    return data;
+}
+
+// ✅ CORRECTO
+interface DataPayload { id: string; value: number; }
+function processData(data: DataPayload): number {
+    return data.value;
+}
+```
+
+### Interfaces sobre Types
+
+```typescript
+// ❌ EVITAR para objetos
+type Config = { key: string; value: number };
+
+// ✅ CORRECTO
+interface IConfig { key: string; value: number; }
+```
+
+### Arrow Functions en Callbacks
+
+```typescript
+// ❌ EVITAR
+this.button.on('pointerdown', function() {
+    this.scene.start('game');
+});
+
+// ✅ CORRECTO
+this.button.on('pointerdown', () => {
+    this.scene.start('game');
+});
+```
+
+---
+
+## Reglas de Arquitectura
+
+### Factory Pattern obligatorio
+
+```typescript
+// ❌ EVITAR - instanciación directa
+const ball = new Phaser.Physics.Arcade.Image(scene, x, y, 'ball');
+
+// ✅ CORRECTO - via Factory
+const ball = this.ballFactory.create(x, y);
+```
+
+### DI para servicios
+
+```typescript
+// ❌ EVITAR - servicio creado en create()
+create() {
+    this.audioService = new AudioService(this);
+}
+
+// ✅ CORRECTO - servicio inyectado
+constructor(private readonly audioService: AudioService) {}
+```
+
+### ULID para IDs
+
+```typescript
+// ❌ PROHIBIDO
+this.id = Date.now();
+this.id = Math.random();
+
+// ✅ CORRECTO
+import { ulid } from 'ulid';
+this.id = ulid();
+```
+
+---
+
+## Protocolo de Cambio de Rol
+
+Para cambiar de rol durante la sesión:
+
+```
+/role [game-engine|web-systems|qa|data-security]
+```
+
+Consultar `.opencode/AGENTS.md` para detalles de cada rol.
+
+---
+
+## Checklist de Compliance
+
+Antes de completar cualquier respuesta que incluya código:
+
+- [ ] ¿Consulté PROJECT_CONTEXT.md para cambios estructurales?
+- [ ] ¿Verifiqué SKILLS.md para cada snippet?
+- [ ] ¿Adopté el rol correcto según el archivo?
+- [ ] ¿Sin `any` en el código?
+- [ ] ¿Factory Pattern para Game Objects?
+- [ ] ¿Servicios inyectados?
+- [ ] ¿ULID para IDs?
+
+---
+
+*Estas reglas son vinculantes para todas las interacciones del agente.*
