@@ -1,12 +1,17 @@
 import { Container, Ticker } from "pixi.js";
+import type { InputManager } from "../input/InputManager";
 import type { IScene, ISceneScreen } from "./IScene";
 
-export type SceneFactory = (parent: Container) => IScene;
+export type SceneFactory = (
+  parent: Container,
+  inputManager: InputManager,
+) => IScene;
 
 export class SceneManager {
   private readonly parentContainer: Container;
   private readonly screen: ISceneScreen;
   private readonly ticker: Ticker;
+  private readonly inputManager: InputManager;
   private readonly factories: Map<string, SceneFactory> = new Map();
 
   private activeScene: IScene | null = null;
@@ -19,10 +24,16 @@ export class SceneManager {
     parentContainer: Container,
     screen: ISceneScreen,
     ticker: Ticker,
+    inputManager: InputManager,
   ) {
     this.parentContainer = parentContainer;
     this.screen = screen;
     this.ticker = ticker;
+    this.inputManager = inputManager;
+  }
+
+  getInputManager(): InputManager {
+    return this.inputManager;
   }
 
   add(name: string, factory: SceneFactory): void {
@@ -54,7 +65,7 @@ export class SceneManager {
 
     this.removeActiveScene();
 
-    const scene = factory(this.parentContainer);
+    const scene = factory(this.parentContainer, this.inputManager);
     await scene.init({ screen: this.screen });
     await scene.create();
 
@@ -125,6 +136,7 @@ export class SceneManager {
   private ensureUpdateLoop(): void {
     if (this.tickerCallback) return;
     this.tickerCallback = (ticker: Ticker) => {
+      this.inputManager.update();
       if (this.activeScene) {
         this.activeScene.update(ticker);
       }
