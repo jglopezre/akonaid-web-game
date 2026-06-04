@@ -289,7 +289,7 @@ Arquitecto → Game Dev / Frontend → Tester
 
 ## 6. DIRECTRICES TRANSVERSALES DE CÓDIGO
 
-- TypeScript `strict: true`. `type` sobre `interface`. Branded types para IDs.
+- TypeScript `strict: true`. `interface` sobre `type` para objetos. `type` para primitivos. Branded types para IDs.
 - ULID como identificador primario público.
 - Secretos en variables de entorno o vaults; nunca en código ni logs.
 - Cada módulo expone `index.ts` con superficie pública mínima.
