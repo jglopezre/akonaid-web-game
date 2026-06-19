@@ -67,11 +67,11 @@ export class Game {
     this.inputManager.start();
 
     await audioManager.load({
-      "ball-hit": "/assets/sfx/ball-hit.ogg",
-      "block-hit": "/assets/sfx/block-hit.ogg",
-      "steel-hit": "/assets/sfx/steel-hit.ogg",
-      death: "/assets/sfx/death.ogg",
-      bgm: "/assets/bgm/bgm1.ogg",
+      "ball-hit": "assets/sfx/ball-hit.ogg",
+      "block-hit": "assets/sfx/block-hit.ogg",
+      "steel-hit": "assets/sfx/steel-hit.ogg",
+      death: "assets/sfx/death.ogg",
+      bgm: "assets/bgm/bgm1.ogg",
     });
 
     this.sceneManager = new SceneManager(
