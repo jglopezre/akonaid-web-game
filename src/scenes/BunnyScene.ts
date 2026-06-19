@@ -60,7 +60,7 @@ export class BunnyScene implements IScene {
   }
 
   async create(): Promise<void> {
-    const bunnyTexture = await Assets.load("/assets/bunny.png");
+    const bunnyTexture = await Assets.load("assets/bunny.png");
     this.createWalls(this.screenWidth, this.screenHeight);
 
     for (const obs of this.createObstacles()) {

@@ -23,7 +23,7 @@ export class GameOverScene implements IScene {
 
   async create(): Promise<void> {
     const bgTexture = await Assets.load(
-      "/assets/images/gameover-background.png",
+      "assets/images/gameover-background.png",
     );
     const bg = new Sprite(bgTexture);
     this.container.addChild(bg);

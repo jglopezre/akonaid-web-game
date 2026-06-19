@@ -91,15 +91,15 @@ export class ArkanoidScene implements IScene {
       goldTexture,
       livesTexture,
     ] = await Promise.all([
-      Assets.load("/assets/images/white-ball.png"),
-      Assets.load("/assets/images/platform-blue-1.png"),
-      Assets.load("/assets/images/background01.png"),
-      Assets.load("/assets/images/white.png"),
-      Assets.load("/assets/images/orange.png"),
-      Assets.load("/assets/images/cyan.png"),
-      Assets.load("/assets/images/green.png"),
-      Assets.load("/assets/images/gold-brick.png"),
-      Assets.load("/assets/images/lives.png"),
+      Assets.load("assets/images/white-ball.png"),
+      Assets.load("assets/images/platform-blue-1.png"),
+      Assets.load("assets/images/background01.png"),
+      Assets.load("assets/images/white.png"),
+      Assets.load("assets/images/orange.png"),
+      Assets.load("assets/images/cyan.png"),
+      Assets.load("assets/images/green.png"),
+      Assets.load("assets/images/gold-brick.png"),
+      Assets.load("assets/images/lives.png"),
     ]);
 
     // Background
@@ -310,8 +310,8 @@ export class ArkanoidScene implements IScene {
     if (this.bgSprite) {
       const nextKey =
         this.currentPhaseIndex === 1
-          ? "/assets/images/background02.png"
-          : "/assets/images/background01.png";
+          ? "assets/images/background02.png"
+          : "assets/images/background01.png";
       Assets.load(nextKey).then((texture: Texture) => {
         this.bgSprite!.texture = texture;
       });
@@ -327,11 +327,11 @@ export class ArkanoidScene implements IScene {
 
     // Re-load textures for the new phase (they are cached by Assets)
     Promise.all([
-      Assets.load("/assets/images/white.png"),
-      Assets.load("/assets/images/orange.png"),
-      Assets.load("/assets/images/cyan.png"),
-      Assets.load("/assets/images/green.png"),
-      Assets.load("/assets/images/gold-brick.png"),
+      Assets.load("assets/images/white.png"),
+      Assets.load("assets/images/orange.png"),
+      Assets.load("assets/images/cyan.png"),
+      Assets.load("assets/images/green.png"),
+      Assets.load("assets/images/gold-brick.png"),
     ]).then(([white, orange, cyan, green, gold]) => {
       brickTextures.white = white;
       brickTextures.orange = orange;
