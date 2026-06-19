@@ -6,6 +6,8 @@ import type {
   SpriteData,
   InputControlledData,
   ColliderData,
+  BallData,
+  BrickData,
 } from "./types";
 import type { ISystem } from "./systems/ISystem";
 
@@ -92,6 +94,8 @@ export class EntityBuilder {
   with(type: ComponentType.Sprite, data: SpriteData): this;
   with(type: ComponentType.InputControlled, data: InputControlledData): this;
   with(type: ComponentType.Collider, data: ColliderData): this;
+  with(type: ComponentType.Ball, data: BallData): this;
+  with(type: ComponentType.Brick, data: BrickData): this;
   with(type: ComponentType, data: unknown): this {
     this.world.setComponent(this.entity, type, data);
     return this;

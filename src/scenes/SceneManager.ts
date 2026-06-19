@@ -6,6 +6,7 @@ import type { IScene, ISceneScreen } from "./IScene";
 export type SceneFactory = (
   parent: Container,
   inputManager: InputManager,
+  sceneManager: SceneManager,
 ) => IScene;
 
 export class SceneManager {
@@ -69,7 +70,7 @@ export class SceneManager {
 
     this.removeActiveScene();
 
-    const scene = factory(this.parentContainer, this.inputManager);
+    const scene = factory(this.parentContainer, this.inputManager, this);
     await scene.init({ screen: this.screen, audioManager: this.audioManager });
     await scene.create();
 

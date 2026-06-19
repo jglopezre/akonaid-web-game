@@ -11,3 +11,7 @@ export {
 export type { InputControlledData } from "./InputControlledComponent";
 export { createCollider, COLLIDER } from "./ColliderComponent";
 export type { ColliderData } from "./ColliderComponent";
+export { createBall, BALL } from "./BallComponent";
+export type { BallData } from "./BallComponent";
+export { createBrick, BRICK } from "./BrickComponent";
+export type { BrickData } from "./BrickComponent";

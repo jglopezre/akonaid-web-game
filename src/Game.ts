@@ -1,6 +1,12 @@
 import { Application } from "pixi.js";
 import { audioManager } from "./audio/AudioManager";
-import { BunnyScene, SceneManager } from "./scenes";
+import {
+  ArkanoidScene,
+  BunnyScene,
+  CongratulationsScene,
+  GameOverScene,
+  SceneManager,
+} from "./scenes";
 import {
   CompositeInputSource,
   InputAction,
@@ -60,7 +66,13 @@ export class Game {
     });
     this.inputManager.start();
 
-    await audioManager.load({});
+    await audioManager.load({
+      "ball-hit": "/assets/sfx/ball-hit.ogg",
+      "block-hit": "/assets/sfx/block-hit.ogg",
+      "steel-hit": "/assets/sfx/steel-hit.ogg",
+      death: "/assets/sfx/death.ogg",
+      bgm: "/assets/bgm/bgm1.ogg",
+    });
 
     this.sceneManager = new SceneManager(
       this.app.stage,
@@ -75,8 +87,24 @@ export class Game {
     await this.init();
     this.sceneManager.add(
       "bunny",
-      (parent, inputManager) => new BunnyScene(parent, inputManager),
+      (parent, inputManager, sceneManager) =>
+        new BunnyScene(parent, inputManager, sceneManager),
     );
-    await this.sceneManager.start("bunny");
+    this.sceneManager.add(
+      "arkanoid",
+      (parent, inputManager, sceneManager) =>
+        new ArkanoidScene(parent, inputManager, sceneManager),
+    );
+    this.sceneManager.add(
+      "gameover",
+      (parent, inputManager, sceneManager) =>
+        new GameOverScene(parent, inputManager, sceneManager),
+    );
+    this.sceneManager.add(
+      "congratulations",
+      (parent, inputManager, sceneManager) =>
+        new CongratulationsScene(parent, inputManager, sceneManager),
+    );
+    await this.sceneManager.start("arkanoid");
   }
 }

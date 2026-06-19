@@ -29,7 +29,11 @@ export class BunnyScene implements IScene {
   private screenWidth = 0;
   private screenHeight = 0;
 
-  constructor(_parent: Container, inputManager: InputManager) {
+  constructor(
+    _parent: Container,
+    inputManager: InputManager,
+    _sceneManager?: unknown,
+  ) {
     this.inputManager = inputManager;
     this.container = new Container();
     this.container.label = "bunny-scene";

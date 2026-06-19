@@ -8,6 +8,8 @@ export enum ComponentType {
   Sprite = 1 << 2,
   InputControlled = 1 << 3,
   Collider = 1 << 4,
+  Ball = 1 << 5,
+  Brick = 1 << 6,
 }
 
 export interface TransformData {
@@ -37,4 +39,11 @@ export interface ColliderData {
   group: CollisionGroup;
   enabled: boolean;
   onCollide?: CollisionCallback;
+}
+
+export type BallData = Record<string, never>;
+
+export interface BrickData {
+  type: "normal" | "hard";
+  points: number;
 }

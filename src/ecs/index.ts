@@ -7,6 +7,8 @@ export type {
   SpriteData,
   InputControlledData,
   ColliderData,
+  BallData,
+  BrickData,
 } from "./types";
 export type { ISystem } from "./systems";
 export {
@@ -15,15 +17,20 @@ export {
   createSprite,
   createInputControlled,
   createCollider,
+  createBall,
+  createBrick,
   TRANSFORM,
   VELOCITY,
   SPRITE,
   INPUT_CONTROLLED,
   COLLIDER,
+  BALL,
+  BRICK,
 } from "./components";
 export {
   InputSystem,
   MovementSystem,
   RenderSystem,
   CollisionSystem,
+  BallSystem,
 } from "./systems";
