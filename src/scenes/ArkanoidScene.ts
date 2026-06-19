@@ -109,13 +109,13 @@ export class ArkanoidScene implements IScene {
     // Walls
     this.createWalls();
 
-    // Paddle (AnimatedSprite)
+    // Paddle (AnimatedSprite) — spritesheet vertical: 88x176, 8 frames de 88x22
     const platformFrames: Texture[] = [];
     for (let i = 0; i < 8; i++) {
       platformFrames.push(
         new Texture({
           source: platformTexture.source,
-          frame: new Rectangle(i * 88, 0, 88, 22),
+          frame: new Rectangle(0, i * 22, 88, 22),
         }),
       );
     }

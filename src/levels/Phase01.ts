@@ -21,7 +21,7 @@ function createBrick(
       frames.push(
         new Texture({
           source: texture.source,
-          frame: new Rectangle(i * 44, 0, 44, 22),
+          frame: new Rectangle(0, i * 22, 44, 22),
         }),
       );
     }

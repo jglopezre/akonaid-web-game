@@ -26,19 +26,12 @@ export class InputSystem implements ISystem {
     if (!this.world) return;
 
     let vx = 0;
-    let vy = 0;
 
     if (this.inputManager.isPressed(InputAction.Left)) {
       vx -= this.speed;
     }
     if (this.inputManager.isPressed(InputAction.Right)) {
       vx += this.speed;
-    }
-    if (this.inputManager.isPressed(InputAction.Up)) {
-      vy -= this.speed;
-    }
-    if (this.inputManager.isPressed(InputAction.Down)) {
-      vy += this.speed;
     }
 
     const entities = this.world.queryEntities(this.requiredMask);
@@ -49,7 +42,8 @@ export class InputSystem implements ISystem {
       );
       if (velocity) {
         velocity.vx = vx;
-        velocity.vy = vy;
+        // vy se mantiene intacto (ej. para gravedad o lógica custom);
+        // el movimiento vertical del paddle se bloquea en la escena
       }
     }
   }
