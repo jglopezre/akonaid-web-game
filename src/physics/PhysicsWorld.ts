@@ -1,5 +1,4 @@
-import { SpatialGrid } from "./SpatialGrid";
-import { resolveOverlap } from "./AABBUtils";
+import { aabbIntersects, resolveOverlap } from "./AABBUtils";
 import type {
   ColliderSnapshot,
   CollisionCallback,
@@ -10,12 +9,7 @@ import type {
 
 export class PhysicsWorld {
   private rules: CollisionRule[] = [];
-  private spatialGrid: SpatialGrid;
   private pendingPairs: CollisionPair[] = [];
-
-  constructor(cellSize: number = 128) {
-    this.spatialGrid = new SpatialGrid(cellSize);
-  }
 
   collider(
     groupA: CollisionGroup,
@@ -40,23 +34,31 @@ export class PhysicsWorld {
   }
 
   step(snapshots: ColliderSnapshot[]): CollisionPair[] {
-    this.spatialGrid.clear();
     this.pendingPairs = [];
 
-    for (const snap of snapshots) {
-      this.spatialGrid.insert(snap);
-    }
+    // DECISION: SpatialGrid eliminado.
+    // Contexto Arkanoid: mundo 350x750, entidades colisionables < 60.
+    // Con cellSize=128 se generaban ~18 celdas con ~3 entidades/celda.
+    // El overhead de Map/Set/hash del grid superaba el beneficio.
+    // Fuerza bruta O(N^2) con N=60 => ~1800 comparaciones AABB/frame.
+    // En JS moderno esto es sub-milisegundo; mas simple y mas rapido.
+    const len = snapshots.length;
+    for (let i = 0; i < len; i++) {
+      const a = snapshots[i];
+      for (let j = i + 1; j < len; j++) {
+        const b = snapshots[j];
+        if (a.entity === b.entity) continue;
 
-    const candidates = this.spatialGrid.queryPotentialPairs();
+        const rule = this.matchRule(a.group, b.group);
+        if (!rule) continue;
 
-    for (const [a, b] of candidates) {
-      const rule = this.matchRule(a.group, b.group);
-      if (!rule) continue;
+        if (!aabbIntersects(a.aabb, b.aabb)) continue;
 
-      const pair: CollisionPair = { a, b, rule };
-      this.pendingPairs.push(pair);
+        const pair: CollisionPair = { a, b, rule };
+        this.pendingPairs.push(pair);
 
-      this.resolvePair(pair);
+        this.resolvePair(pair);
+      }
     }
 
     return this.pendingPairs;

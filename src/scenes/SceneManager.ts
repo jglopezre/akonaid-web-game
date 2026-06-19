@@ -1,4 +1,5 @@
 import { Container, Ticker } from "pixi.js";
+import type { AudioManager } from "../audio/AudioManager";
 import type { InputManager } from "../input/InputManager";
 import type { IScene, ISceneScreen } from "./IScene";
 
@@ -12,6 +13,7 @@ export class SceneManager {
   private readonly screen: ISceneScreen;
   private readonly ticker: Ticker;
   private readonly inputManager: InputManager;
+  private readonly audioManager: AudioManager;
   private readonly factories: Map<string, SceneFactory> = new Map();
 
   private activeScene: IScene | null = null;
@@ -25,11 +27,13 @@ export class SceneManager {
     screen: ISceneScreen,
     ticker: Ticker,
     inputManager: InputManager,
+    audioManager: AudioManager,
   ) {
     this.parentContainer = parentContainer;
     this.screen = screen;
     this.ticker = ticker;
     this.inputManager = inputManager;
+    this.audioManager = audioManager;
   }
 
   getInputManager(): InputManager {
@@ -66,7 +70,7 @@ export class SceneManager {
     this.removeActiveScene();
 
     const scene = factory(this.parentContainer, this.inputManager);
-    await scene.init({ screen: this.screen });
+    await scene.init({ screen: this.screen, audioManager: this.audioManager });
     await scene.create();
 
     this.parentContainer.addChild(scene.container);

@@ -1,4 +1,5 @@
 import { Container, Ticker } from "pixi.js";
+import type { AudioManager } from "../audio/AudioManager";
 
 export interface ISceneScreen {
   width: number;
@@ -7,6 +8,7 @@ export interface ISceneScreen {
 
 export interface ISceneContext {
   screen: ISceneScreen;
+  audioManager: AudioManager;
 }
 
 export interface IScene {

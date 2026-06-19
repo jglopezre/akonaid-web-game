@@ -13,7 +13,6 @@ GAME LOOP
 
 CollisionSystem depende de:
   PhysicsWorld (reglas + engine)
-    ├── SpatialGrid (fase ancha, O(N) promedio)
     └── AABBUtils  (fase estrecha, interseccion/resolucion)
 ```
 
@@ -23,8 +22,7 @@ CollisionSystem depende de:
 |---------|----------------|
 | `types.ts` | Tipos compartidos: `CollisionGroup`, `CollisionRule`, `ColliderSnapshot`, `CollisionPair` |
 | `AABBUtils.ts` | Funciones puras: `aabbIntersects`, `resolveOverlap`, `centerAABB` |
-| `SpatialGrid.ts` | Spatial hash grid para fase ancha. Divide el espacio en celdas de tamano configurable. |
-| `PhysicsWorld.ts` | Motor principal: registro de reglas grupo-vs-grupo, deteccion, resolucion y callbacks. |
+| `PhysicsWorld.ts` | Motor principal: registro de reglas grupo-vs-grupo, deteccion por fuerza bruta filtrada, resolucion y callbacks. |
 | `index.ts` | Barrel exports. |
 
 ### ECS complementario (fuera de `physics/`)
@@ -78,7 +76,7 @@ Las reglas son bidireccionales: `collider(1, 2)` cubre tanto `1 vs 2` como `2 vs
 
 ### Flujo por frame (`PhysicsWorld.step`)
 
-1. **Fase ancha** (`SpatialGrid`): inserta todos los `ColliderSnapshot` en una grilla espacial. Solo compara pares que comparten celda.
+1. **Fase ancha** (fuerza bruta filtrada): itera todos los pares unicos de `ColliderSnapshot`. Con N<60 entidades el overhead de un spatial grid supera el beneficio.
 2. **Fase estrecha** (`aabbIntersects`): para cada par candidato, verifica interseccion AABB exacta.
 3. **Match de regla**: busca si existe una regla para `(snapshotA.group, snapshotB.group)`.
 4. **Resolucion** (`resolveOverlap`): si `processOverlap === true`:
@@ -153,8 +151,8 @@ physics.clearRules();  // limpia reglas
 
 ## Optimizacion
 
-- **SpatialGrid**: la fase ancha usa un spatial hash con celdas de 128px por defecto. Ajustar `new PhysicsWorld(cellSize)` segun el tamano tipico de los colliders. Celdas mas grandes = mas pares candidatos = mas comparaciones AABB.
-- **Paquetes de 16 bits**: la clave de par usa `(entityA << 16) | entityB` para deduplicar en el `Set`. Asume que no hay mas de 65535 entidades activas.
+- **Fuerza bruta con N bajo**: para escenas con <80 entidades colisionables (ej. Arkanoid con ~60), la fuerza bruta O(N^2) es mas rapida que el overhead de un spatial hash. Se conserva el sistema simple sin grilla.
+- **Paquetes de 16 bits**: si en el futuro se reintroduce un spatial grid, la clave de par usaba `(entityA << 16) | entityB` para deduplicar en un `Set`. Asume que no hay mas de 65535 entidades activas.
 - **Sin GC pressure**: los snapshots se crean cada frame como objetos nuevos. Para escenas con >1000 colliders, considerar pooling de snapshots.
 
 ## Limitaciones actuales

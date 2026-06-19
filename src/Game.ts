@@ -1,4 +1,5 @@
 import { Application } from "pixi.js";
+import { audioManager } from "./audio/AudioManager";
 import { BunnyScene, SceneManager } from "./scenes";
 import {
   CompositeInputSource,
@@ -21,8 +22,11 @@ export class Game {
   async init(): Promise<void> {
     this.app = new Application();
     await this.app.init({
-      background: "#1099bb",
-      resizeTo: window,
+      width: 350,
+      height: 750,
+      background: "#000000",
+      autoDensity: true,
+      resolution: window.devicePixelRatio,
     });
     this.element.appendChild(this.app.canvas);
 
@@ -56,11 +60,14 @@ export class Game {
     });
     this.inputManager.start();
 
+    await audioManager.load({});
+
     this.sceneManager = new SceneManager(
       this.app.stage,
       this.app.screen,
       this.app.ticker,
       this.inputManager,
+      audioManager,
     );
   }
 
