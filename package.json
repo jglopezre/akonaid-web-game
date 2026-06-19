@@ -1,6 +1,6 @@
 {
-  "name": "prueba",
-  "version": "0.0.0",
+  "name": "Arkonaid",
+  "version": "0.1.0",
   "private": true,
   "type": "module",
   "scripts": {
@@ -10,18 +10,18 @@
     "dev": "vite"
   },
   "dependencies": {
-    "@pixi/sound": "^6.0.1",
-    "eventemitter3": "^5.0.4",
-    "pixi.js": "^8.8.1"
+    "@pixi/sound": "6.0.1",
+    "eventemitter3": "5.0.4",
+    "pixi.js": "8.8.1"
   },
   "devDependencies": {
-    "@eslint/js": "^9.21.0",
-    "eslint": "^9.21.0",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3",
-    "typescript": "~5.7.3",
-    "typescript-eslint": "^8.25.0",
-    "vite": "^6.2.0"
+    "@eslint/js": "9.21.0",
+    "eslint": "9.21.0",
+    "eslint-config-prettier": "10.1.2",
+    "eslint-plugin-prettier": "5.2.6",
+    "prettier": "3.5.3",
+    "typescript": "5.7.3",
+    "typescript-eslint": "8.25.0",
+    "vite": "6.2.0"
   }
 }
