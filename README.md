@@ -170,7 +170,7 @@ public/
   - `v0.1.0-pixi-scaffold` — Scaffold base ✅
   - `v0.2.0-gameplay-core` — Core gameplay Arkanoid ✅
   - `v0.3.0-polish` — Power-ups, testing, balance ⏳
-- **Project Board** — `Arkonaid Game` (pendiente de creación; requiere autorizar scope `project` en `gh auth`)
+- **[Project Board](https://github.com/users/jglopezre/projects/2)** — `Arkonaid Game` ✅ (todas las issues agregadas)
 
 ---
 
