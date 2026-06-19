@@ -1,5 +1,7 @@
 # ARkONAID — PixiJS v8 Edition
 
+![Versión](https://img.shields.io/badge/version-0.1.0-blue)
+
 > **ARkONAID** es un juego tipo Arkanoid/Breakout originalmente desarrollado en [Phaser 3](https://phaser.io/) por [@jglopezre](https://github.com/jglopezre). Esta rama contiene la **migración completa a PixiJS v8** con arquitectura ECS, sistema de físicas AABB, manejo de input unificado y gestión de escenas modular.
 
 ---
@@ -39,7 +41,16 @@
 
 ## 🏷️ Tags
 
-- **`v0.1.0-pixi-scaffold`** — Estado base del scaffold PixiJS v8 (ECS, Input, Physics, SceneManager). Úsalo como punto de partida para forks de nuevos proyectos PixiJS.
+| Tag | Descripción |
+|-----|-------------|
+| **`v0.1.0-pixi-scaffold`** | Estado base del scaffold PixiJS v8 (ECS, Input, Physics, SceneManager). Punto de partida para forks. |
+| **`v0.1.0`** | Versión operativa base. Gameplay completo de Arkanoid en PixiJS v8: plataforma, bola, bricks, fases, vidas, puntuación, audio y escenas finales. |
+
+```bash
+git clone https://github.com/jglopezre/akonaid-web-game.git
+cd akonaid-web-game
+git checkout v0.1.0   # versión operativa base
+```
 
 ```bash
 git clone https://github.com/jglopezre/akonaid-web-game.git
